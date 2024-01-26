@@ -1,0 +1,30 @@
+<div id="app"></div>
+<!-- 이 곳에 어떠한 내용이 렌더링 -->
+<script>
+  // var, let, const의 차이
+  var data = {
+    message: "hi",
+  };
+
+  function render(sth) {
+    // 위의 div에 접근
+    var div = document.querySelector("#app");
+    div.innerHTML = sth;
+  }
+
+  // render('Hello Vue ! ')
+
+  // proxy (위에서의 데이터, 두번째로 데이터를 넘길 내용을 작성하는 부분)
+  var app = new Proxy(data, {
+    // 값에 접근하는 부분
+    get() {
+      console.log("값 접근");
+    },
+    // 값을 변경하는 부분
+    set(target, prop, newValue) {
+      console.log("값 갱신");
+      target[prop] = newValue;
+      render(newValue);
+    },
+  });
+</script>

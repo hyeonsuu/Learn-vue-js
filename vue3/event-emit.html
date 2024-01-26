@@ -1,0 +1,35 @@
+<!-- HTML -->
+<div id="app">
+  <app-contents v-on:refresh="showAlert"></app-contents>
+</div>
+
+<!-- Javascript -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  var appContents = {
+    // 기존에는 문자열과 변수를 함께 쓸 수 없어서 각자 쓰고 + 로 이어줬어야했는데
+    // 백틱을 쓰면 줄바꿈, 문자열 변수 함께 쓰기 등이 가능해져서 편리하다. (ES6 문법)
+    template: `
+        <p>
+            <button v-on:click="sendEvent">갱신</button>    
+        </p>
+    `,
+    methods: {
+      sendEvent() {
+        this.$emit("refresh");
+      },
+    },
+  };
+
+  // 루트 컴포넌트
+  Vue.createApp({
+    methods: {
+      showAlert() {
+        alert("새로고침");
+      },
+    },
+    components: {
+      "app-contents": appContents,
+    },
+  }).mount("#app");
+</script>
